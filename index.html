@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>參觀校園共生池｜魚菜共生的理念與原理</title>
+<title>水裏有循環——樂天綠色共生園科學探究｜魚菜共生的理念與原理</title>
 <style>
 /* ============ 基礎設定 ============ */
 *,*::before,*::after{box-sizing:border-box;}
@@ -49,9 +49,9 @@ button{font-family:inherit;}
   padding:10px 18px;
 }
 .brand{
-  display:flex;align-items:center;gap:8px;flex-shrink:0;
-  font-weight:800;font-size:.95rem;color:var(--c1-d);text-decoration:none;
-  letter-spacing:.02em;
+  display:flex;align-items:center;gap:8px;flex-shrink:1;
+  font-weight:800;font-size:.78rem;color:var(--c1-d);text-decoration:none;
+  letter-spacing:.01em;line-height:1.3;max-width:14rem;
 }
 .brand-dot{
   width:12px;height:12px;border-radius:50%;
@@ -123,7 +123,7 @@ button{font-family:inherit;}
   margin-top:6px;
 }
 .lede{
-  max-width:600px;margin:22px auto 0;
+  max-width:720px;margin:22px auto 0;
   font-size:clamp(.95rem,2.2vw,1.05rem);
   color:#3d6570;
 }
@@ -324,6 +324,10 @@ section.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px s
   font-size:clamp(1.05rem,3.4vw,1.5rem);
   font-weight:900;letter-spacing:.08em;
 }
+.mnemonic-local{
+  display:block;margin-top:10px;
+  font-size:.95rem;font-weight:700;letter-spacing:.04em;opacity:.95;
+}
 
 /* ============ 流程時間線 ============ */
 .timeline{margin-top:10px;}
@@ -480,7 +484,7 @@ footer{
   .block{padding:54px 18px;}
   .hero{padding:64px 18px 76px;}
   .nav-inner{padding:9px 14px;gap:10px;flex-wrap:wrap;}
-  .brand{font-size:.86rem;}
+  .brand{font-size:.78rem;max-width:none;}
   .nav-links{order:3;flex:1 0 100%;margin-left:0;}
   .nav-links a{padding:6px 11px;font-size:.78rem;}
   .nav-games{margin-left:auto;justify-content:flex-end;}
@@ -500,19 +504,17 @@ footer{
 <!-- ============ 導覽 ============ -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="#cover" class="brand"><span class="brand-dot"></span>校園共生池</a>
+    <a href="#cover" class="brand"><span class="brand-dot"></span>聖卡洛生命園-樂天綠色共生園</a>
     <nav class="nav-links" id="navLinks">
       <a href="#goals">學習目標</a>
       <a href="#elements">五要素</a>
       <a href="#cycle">氮循環</a>
-      <a href="#flow">流程</a>
       <a href="#tasks">任務</a>
-      <a href="#assess">評估</a>
       <a href="#summary">總結</a>
     </nav>
     <div class="nav-games">
       <a class="nav-game" href="cycle.html">拼循環圖遊戲</a>
-      <a class="nav-game nav-game-alt" href="cycle-deepseek.html">拼循環圖（DeepSeek 版）</a>
+      <a class="nav-game nav-game-alt" href="cycle-deepseek.html">拼循環圖（調適版）</a>
     </div>
   </div>
 </header>
@@ -523,11 +525,11 @@ footer{
   <div class="blob b2"></div>
   <div class="hero-inner">
     <span class="eyebrow">小六常識科・生態與環境</span>
-    <h1>參觀校園共生池<br><span>魚菜共生的理念與原理</span></h1>
-    <p class="lede">魚的排泄物，為甚麼會變成菜的營養？一趟走出課室的觀察之旅，讓你親眼看見大自然的循環智慧。</p>
+    <h1>水裏有循環——樂天綠色共生園科學探究<br><span>魚菜共生的理念與原理</span></h1>
+    <p class="lede">魚的排泄物，為甚麼會變成植物的營養？魚菜共生裡負責吸收養分的是「菜」；在聖卡洛生命園-樂天綠色共生園，這些植物是水中植物（如荷花、浮萍等），不是葉菜。一趟走出課室的觀察之旅，讓你親眼看見大自然的循環智慧。</p>
     <div class="hero-tags">
       <span>🐟 魚</span>
-      <span>🌿 菜</span>
+      <span>🌿 水中植物</span>
       <span>🦠 細菌</span>
       <span>💧 水</span>
       <span>☀️ 陽光</span>
@@ -535,7 +537,7 @@ footer{
     <div class="hero-actions">
       <a href="#goals" class="cta">開始學習 ↓</a>
       <a href="cycle.html" class="cta cta-game">拼循環圖遊戲</a>
-      <a href="cycle-deepseek.html" class="cta cta-game">拼循環圖（DeepSeek 版）</a>
+      <a href="cycle-deepseek.html" class="cta cta-game">拼循環圖（調適版）</a>
     </div>
     <p class="compare-note">兩款拼循環圖供課堂比較，玩法各自獨立。</p>
   </div>
@@ -547,7 +549,7 @@ footer{
     <div class="sec-head reveal">
       <p class="sec-kicker">01 / Learning Goals</p>
       <h2>這一課，我們要學會甚麼？</h2>
-      <p class="sec-sub">從知識、技能到態度，三個方向一起出發，讓你走進共生池時，眼睛、雙手和腦袋都準備好。</p>
+      <p class="sec-sub">從知識、技能到態度，三個方向一起出發，讓你走進聖卡洛生命園-樂天綠色共生園時，眼睛、雙手和腦袋都準備好。</p>
     </div>
 
     <div class="grid-3">
@@ -557,7 +559,7 @@ footer{
           <h3>知識</h3>
         </div>
         <ul>
-          <li>說出魚菜共生五要素的角色：魚、菜、細菌、水、陽光</li>
+          <li>說出魚菜共生五要素的角色：魚、菜、細菌、水、陽光。在本園，菜是水中植物（如荷花、浮萍等）</li>
           <li>描述氮循環三步：氨 → 亞硝酸鹽 → 硝酸鹽</li>
           <li>解釋光合作用如何為整個系統提供能量</li>
           <li>說明「水」作為運送媒介的作用</li>
@@ -570,7 +572,7 @@ footer{
           <h3>技能</h3>
         </div>
         <ul>
-          <li>有系統地觀察共生池的水色、魚、菜根與氣泡</li>
+          <li>有系統地觀察園內的水色、魚、水中植物（如荷花、浮萍等）與氣泡</li>
           <li>把五張卡拼成一個正確的循環圖</li>
           <li>用「因為……所以……」口頭說出因果關係</li>
           <li>與組員分工合作、輪流記錄與匯報</li>
@@ -599,7 +601,7 @@ footer{
     <div class="sec-head reveal">
       <p class="sec-kicker">02 / Five Elements</p>
       <h2>五要素角色：缺一不可的共生團隊</h2>
-      <p class="sec-sub">魚菜共生不是「魚 + 菜」這麼簡單，而是五個角色各司其職、互相支撐的系統。</p>
+      <p class="sec-sub">魚菜共生不是「魚 + 菜」這麼簡單，而是五個角色各司其職、互相支撐的系統。在聖卡洛生命園-樂天綠色共生園，這裡的「菜」是水中植物（如荷花、浮萍等），不是葉菜。</p>
     </div>
 
     <div class="toolbar reveal">
@@ -623,7 +625,7 @@ footer{
         <h3>菜（植物）</h3>
         <span class="el-tag">吸收者・淨水高手</span>
         <div class="el-detail">
-          <p>菜根浸在水裡，直接吸收硝酸鹽來製造蛋白質和葉綠素，長葉長根。它一邊吃「肥」，一邊把水變乾淨，是系統裡的天然濾水器。</p>
+          <p>在魚菜共生裡，植物吸收硝酸鹽來製造蛋白質和葉綠素，一邊吸收養分，一邊把水變乾淨，是系統裡的天然濾水器。在這個園，植物是水中植物（如荷花、浮萍等），長在水中，不是葉菜。</p>
         </div>
         <p class="el-hint">點擊看角色</p>
       </article>
@@ -643,7 +645,7 @@ footer{
         <h3>水</h3>
         <span class="el-tag">媒介・運輸大隊</span>
         <div class="el-detail">
-          <p>水把養分送到植物根部、把廢物帶到細菌區、再把潔淨的水送回魚池。它像一條馬路，讓所有角色可以「互相見面」。</p>
+          <p>水把養分送到水中植物（如荷花、浮萍等），把廢物帶到細菌區，再把潔淨的水送回魚生活的地方。它像一條馬路，讓所有角色可以「互相見面」。</p>
         </div>
         <p class="el-hint">點擊看角色</p>
       </article>
@@ -685,71 +687,16 @@ footer{
     <div class="mnemonic-strip reveal">
       <p>記憶口訣</p>
       <strong>魚排氨、菌轉化、菜吸收、水回流、陽光供能</strong>
+      <span class="mnemonic-local">在本園，「菜」是水中植物（如荷花、浮萍等）。</span>
     </div>
   </div>
 </section>
 
-<!-- ============ 5. 35分鐘流程 ============ -->
-<section id="flow" class="alt">
+<!-- ============ 4. 學生任務 ============ -->
+<section id="tasks" class="alt">
   <div class="block">
     <div class="sec-head reveal">
-      <p class="sec-kicker">04 / Lesson Flow</p>
-      <h2>35 分鐘流程摘要</h2>
-      <p class="sec-sub">由集合到總結，一節課走完「觀察 → 拼圖 → 表達」三個階段。</p>
-    </div>
-
-    <div class="timeline reveal">
-      <div class="tl-item">
-        <div class="tl-time">0–5 分鐘</div>
-        <div class="tl-body">
-          <h4>集合・安全與觀察規則</h4>
-          <p>在共生池旁集合，說明三不原則：不拍打水面、不投餵、不捕捉生物；分組並派發觀察記錄表。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">5–10 分鐘</div>
-        <div class="tl-body">
-          <h4>導入提問</h4>
-          <p>「魚和菜為甚麼可以一起生活？」「魚的排泄物去了哪裡？」用兩個問題引出「共生」與「循環」的概念。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">10–18 分鐘</div>
-        <div class="tl-body">
-          <h4>實地觀察</h4>
-          <p>分組用眼看、鼻聞（不觸摸）觀察：水是否清澈？魚的游動如何？菜根是甚麼顏色？水面有沒有氣泡？即時記錄在表上。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">18–26 分鐘</div>
-        <div class="tl-body">
-          <h4>小組拼循環圖</h4>
-          <p>把「魚、細菌、菜、水、陽光」五張卡排成正確的循環，並用箭頭畫出養分與水的流向，找出細菌藏在哪裡。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">26–32 分鐘</div>
-        <div class="tl-body">
-          <h4>口頭匯報</h4>
-          <p>每組派代表，用「因為……所以……」說出最少兩組因果關係，例如「因為細菌把氨轉化，所以魚不會中毒」。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">32–35 分鐘</div>
-        <div class="tl-body">
-          <h4>總結・延伸</h4>
-          <p>齊讀口訣「魚排氨、菌轉化、菜吸收、水回流、陽光供能」，佈置回家觀察記錄任務。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 6. 學生任務 ============ -->
-<section id="tasks">
-  <div class="block">
-    <div class="sec-head reveal">
-      <p class="sec-kicker">05 / Student Tasks</p>
+      <p class="sec-kicker">04 / Student Tasks</p>
       <h2>學生任務：觀察 ＋ 拼圖 ＋ 表達</h2>
       <p class="sec-sub">三個任務層層遞進，從「看見」到「說得清楚」。</p>
     </div>
@@ -761,7 +708,7 @@ footer{
         <ul>
           <li>水：清澈還是混濁？有沒有異味？</li>
           <li>魚：游動活躍嗎？集中在哪裡？</li>
-          <li>菜：根是白色還是褐色？根毛多嗎？</li>
+          <li>你認識水中的植物嗎？它在水中有什麼作用？</li>
           <li>其他：水面有氣泡嗎？過濾區有甚麼？</li>
         </ul>
         <div class="checklist">
@@ -793,7 +740,7 @@ footer{
         </div>
         <div class="task-games">
           <a class="task-game" href="cycle.html">拼循環圖遊戲</a>
-          <a class="task-game task-game-alt" href="cycle-deepseek.html">拼循環圖（DeepSeek 版）</a>
+          <a class="task-game task-game-alt" href="cycle-deepseek.html">拼循環圖（調適版）</a>
         </div>
         <p class="compare-note task-compare">兩款都可試玩，方便課堂比較。</p>
       </article>
@@ -804,14 +751,14 @@ footer{
         <ul>
           <li>用「因為……所以……」說出最少兩組關係</li>
           <li>例如：因為細菌把氨轉化，所以水質變好</li>
-          <li>例如：因為菜吸收硝酸鹽，所以水可以回流魚池</li>
+          <li>例如：因為水中植物（如荷花、浮萍等）吸收硝酸鹽，所以水可以回流</li>
           <li>組員要輪流發言，其他人專心聆聽</li>
         </ul>
         <div class="checklist">
           <p>表達小貼士</p>
           <ul>
             <li>先說「因為」，停一秒，再說「所以」</li>
-            <li>配合手勢指向共生池的位置</li>
+            <li>配合手勢指向園裡的水中植物</li>
           </ul>
         </div>
       </article>
@@ -819,102 +766,11 @@ footer{
   </div>
 </section>
 
-<!-- ============ 7. 評估與延伸 ============ -->
-<section id="assess" class="alt">
-  <div class="block">
-    <div class="sec-head reveal">
-      <p class="sec-kicker">06 / Assessment &amp; Extension</p>
-      <h2>評估與延伸</h2>
-      <p class="sec-sub">怎樣知道學生真的學會了？看他們能否把「看過的」變成「說得出的」。</p>
-    </div>
-
-    <div class="table-wrap reveal" style="margin-bottom:26px;">
-      <table>
-        <thead>
-          <tr>
-            <th>評估面向</th>
-            <th>觀察指標</th>
-            <th>表現示例</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>知識</td>
-            <td>能指出五要素及其角色</td>
-            <td>說出「細菌負責把氨轉成硝酸鹽」</td>
-          </tr>
-          <tr>
-            <td>技能</td>
-            <td>能排出正確的循環圖</td>
-            <td>小組拼圖無缺口，箭頭方向正確</td>
-          </tr>
-          <tr>
-            <td>表達</td>
-            <td>能用因果句式說明關係</td>
-            <td>「因為菜吸收硝酸鹽，所以水變乾淨」</td>
-          </tr>
-          <tr>
-            <td>態度</td>
-            <td>能愛護生物、珍惜水資源</td>
-            <td>不拍打水面、主動提醒同學守規則</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="grid-2">
-      <article class="card reveal">
-        <h3 style="font-size:1.08rem;font-weight:800;color:var(--c1-d);margin-bottom:14px;">🏠 課後延伸活動</h3>
-        <ul style="list-style:none;padding:0;">
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
-            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">1.</span>
-            用膠樽設計一個迷你魚菜共生瓶，一星期後拍照記錄。
-          </li>
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
-            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">2.</span>
-            連續七天記錄家中魚缸或盆栽的水色變化，嘗試解釋原因。
-          </li>
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
-            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">3.</span>
-            訪問家人：以前種菜要施肥，現在魚菜共生為甚麼不用？
-          </li>
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;">
-            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">4.</span>
-            畫一張「我家的共生循環圖」，下節課與同學分享。
-          </li>
-        </ul>
-      </article>
-
-      <article class="card reveal d1">
-        <h3 style="font-size:1.08rem;font-weight:800;color:var(--c1-d);margin-bottom:14px;">💡 常見迷思拆解</h3>
-        <ul style="list-style:none;padding:0;">
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
-            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
-            「魚菜共生就是魚和菜一起養。」→ 其實關鍵是「細菌」與「循環」。
-          </li>
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
-            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
-            「水會越來越臭。」→ 只要細菌與植物正常工作，水會越來越清。
-          </li>
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
-            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
-            「植物靠魚的糞便直接吸收養分。」→ 要經過細菌兩步轉化才行。
-          </li>
-          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;">
-            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
-            「不用陽光也可以。」→ 沒有陽光，植物無法光合作用，系統就斷電。
-          </li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 8. 重點總結 ============ -->
+<!-- ============ 5. 重點總結 ============ -->
 <section id="summary">
   <div class="block">
     <div class="sec-head reveal">
-      <p class="sec-kicker">07 / Summary</p>
+      <p class="sec-kicker">05 / Summary</p>
       <h2>重點總結</h2>
       <p class="sec-sub">一句口訣、一條因果鏈，把整課帶回家。</p>
     </div>
@@ -939,11 +795,12 @@ footer{
         <span>水回流</span>
         <span>陽光供能</span>
       </div>
+      <p class="sec-sub" style="margin:0 auto 22px;text-align:center;">口訣裡的「菜」，在本園是水中植物（如荷花、浮萍等）。</p>
 
       <div class="key-points">
         <div class="kp">
           <h4>① 五要素，缺一不可</h4>
-          <p>魚、菜、細菌、水、陽光各有角色，任何一個消失，循環就會斷開。</p>
+          <p>魚、菜、細菌、水、陽光各有角色，任何一個消失，循環就會斷開。在聖卡洛生命園-樂天綠色共生園，菜是水中植物（如荷花、浮萍等）。</p>
         </div>
         <div class="kp">
           <h4>② 細菌是關鍵橋樑</h4>
@@ -963,7 +820,7 @@ footer{
 </section>
 
 <footer>
-  校園共生池學習單元｜小六常識科　·　魚菜共生的理念與原理
+  聖卡洛生命園-樂天綠色共生園｜小六常識科　·　魚菜共生的理念與原理
 </footer>
 
 <button id="toTop" type="button" aria-label="回到頂部">↑</button>
@@ -1039,8 +896,8 @@ footer{
     {
       name: "菜吸收",
       formula: "NO₃⁻ → 植物生長",
-      text: "蔬菜的根浸在水裡，直接吸收硝酸鹽，用來製造蛋白質和葉綠素，長葉、長根。植物一邊吸收養分，一邊把水「過濾」乾淨。",
-      note: "根毛愈多，吸收面積愈大，淨水效果就愈好。"
+      text: "植物吸收硝酸鹽來生長，同時把水過濾乾淨。在聖卡洛生命園-樂天綠色共生園，這裡的植物是水中植物（如荷花、浮萍等），不是葉菜。",
+      note: "荷花、浮萍等水中植物在水裡吸收養分，幫助水質保持清澈。"
     },
     {
       name: "水回流",
