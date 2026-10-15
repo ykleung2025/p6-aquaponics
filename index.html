@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>參觀校園共生池｜魚菜共生的理念與原理</title>
+<style>
+/* ============ 基礎設定 ============ */
+*,*::before,*::after{box-sizing:border-box;}
+:root{
+  --c1:#0891b2;          /* 青藍 */
+  --c2:#10b981;          /* 翠綠 */
+  --c1-d:#0e6b83;
+  --ink:#0d2b33;
+  --muted:#5b7c87;
+  --line:rgba(8,145,178,.14);
+  --bg:#f5fbfc;
+  --grad:linear-gradient(135deg,#0891b2 0%,#10b981 100%);
+  --radius:20px;
+  --shadow:0 12px 32px rgba(8,145,178,.10);
+  --shadow-lg:0 20px 50px rgba(8,145,178,.18);
+}
+html{scroll-behavior:smooth;scroll-padding-top:78px;}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{line-height:1.35;margin:0;}
+p{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
+a{color:inherit;}
+button{font-family:inherit;}
+
+/* ============ 導覽列 ============ */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;gap:14px;
+  padding:10px 18px;
+}
+.brand{
+  display:flex;align-items:center;gap:8px;flex-shrink:0;
+  font-weight:800;font-size:.95rem;color:var(--c1-d);text-decoration:none;
+  letter-spacing:.02em;
+}
+.brand-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--grad);
+  box-shadow:0 0 0 4px rgba(16,185,129,.15);
+}
+.nav-links{
+  display:flex;gap:4px;margin-left:auto;
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  padding:2px;
+}
+.nav-links::-webkit-scrollbar{display:none;}
+.nav-links a{
+  white-space:nowrap;text-decoration:none;
+  padding:6px 13px;border-radius:999px;
+  font-size:.82rem;font-weight:600;color:var(--muted);
+  transition:background .25s,color .25s;
+}
+.nav-links a:hover{background:#e0f7fa;color:var(--c1-d);}
+.nav-links a.active{background:var(--grad);color:#fff;box-shadow:0 6px 16px rgba(16,185,129,.28);}
+
+/* ============ 封面 ============ */
+.hero{
+  position:relative;overflow:hidden;
+  padding:84px 22px 96px;
+  background:linear-gradient(140deg,#e0f7fa 0%,#ecfdf5 55%,#f0fdfa 100%);
+  text-align:center;
+}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;}
+.b1{width:380px;height:380px;background:#67e8f9;top:-140px;left:-100px;animation:float 13s ease-in-out infinite;}
+.b2{width:340px;height:340px;background:#6ee7b7;bottom:-160px;right:-80px;animation:float 16s ease-in-out infinite reverse;}
+@keyframes float{
+  0%,100%{transform:translate(0,0);}
+  50%{transform:translate(34px,-28px);}
+}
+.hero-inner{position:relative;z-index:2;max-width:820px;margin:0 auto;}
+.eyebrow{
+  display:inline-block;
+  font-size:.78rem;font-weight:800;letter-spacing:.16em;
+  color:var(--c1-d);background:rgba(255,255,255,.75);
+  border:1px solid rgba(8,145,178,.18);
+  padding:6px 16px;border-radius:999px;margin-bottom:22px;
+}
+.hero h1{
+  font-size:clamp(1.75rem,5vw,3rem);
+  font-weight:900;letter-spacing:-.01em;
+}
+.hero h1 span{
+  display:inline-block;
+  background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  margin-top:6px;
+}
+.lede{
+  max-width:600px;margin:22px auto 0;
+  font-size:clamp(.95rem,2.2vw,1.05rem);
+  color:#3d6570;
+}
+.hero-tags{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-top:30px;
+}
+.hero-tags span{
+  background:#fff;border:1px solid var(--line);
+  border-radius:999px;padding:7px 16px;
+  font-size:.88rem;font-weight:600;color:var(--c1-d);
+  box-shadow:0 6px 16px rgba(8,145,178,.08);
+  transition:transform .25s,box-shadow .25s;
+}
+.hero-tags span:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(8,145,178,.16);}
+.cta{
+  display:inline-block;margin-top:36px;
+  padding:14px 34px;border-radius:999px;
+  background:var(--grad);color:#fff;text-decoration:none;
+  font-weight:700;font-size:1rem;letter-spacing:.04em;
+  box-shadow:0 14px 30px rgba(16,185,129,.32);
+  transition:transform .25s,box-shadow .25s;
+}
+.cta:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(16,185,129,.4);}
+
+/* ============ 區塊排版 ============ */
+.block{max-width:1080px;margin:0 auto;padding:70px 22px;}
+section.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.sec-head{margin-bottom:36px;}
+.sec-kicker{
+  font-size:.76rem;font-weight:800;letter-spacing:.16em;
+  color:var(--c2);text-transform:uppercase;margin-bottom:8px;
+}
+.sec-head h2{font-size:clamp(1.35rem,3.6vw,2rem);font-weight:900;}
+.sec-head h2::after{
+  content:"";display:block;width:56px;height:4px;border-radius:2px;
+  background:var(--grad);margin-top:14px;
+}
+.sec-sub{margin-top:14px;color:var(--muted);font-size:.95rem;max-width:680px;}
+
+/* ============ 通用卡片 ============ */
+.card{
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);padding:26px 24px;
+  box-shadow:var(--shadow);
+  transition:transform .3s,box-shadow .3s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.grid-3{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+.grid-2{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+
+/* ============ 學習目標 ============ */
+.goal-card{position:relative;overflow:hidden;}
+.goal-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:var(--grad);
+}
+.goal-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.goal-icon{
+  width:46px;height:46px;border-radius:14px;
+  display:grid;place-items:center;font-size:1.35rem;
+  background:#e6f9f6;
+}
+.goal-card:nth-child(2) .goal-icon{background:#e0f2fe;}
+.goal-card:nth-child(3) .goal-icon{background:#fef3e2;}
+.goal-card h3{font-size:1.15rem;font-weight:800;color:var(--c1-d);}
+.goal-card li{
+  position:relative;padding-left:20px;
+  font-size:.93rem;color:#3d6570;margin-bottom:8px;
+}
+.goal-card li::before{
+  content:"";position:absolute;left:2px;top:.68em;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--grad);
+}
+
+/* ============ 五要素 ============ */
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;margin-bottom:22px;
+}
+.tip-text{font-size:.86rem;color:var(--muted);}
+.btn-mini{
+  border:1px solid var(--line);background:#fff;color:var(--c1-d);
+  padding:8px 18px;border-radius:999px;font-size:.84rem;font-weight:700;
+  cursor:pointer;transition:.25s;
+}
+.btn-mini:hover{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(16,185,129,.25);}
+
+.grid-el{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));}
+.el-card{
+  position:relative;overflow:hidden;
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);padding:22px 18px 18px;
+  box-shadow:var(--shadow);cursor:pointer;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+  outline:none;
+}
+.el-card::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:4px;
+  background:var(--grad);opacity:.9;
+}
+.el-card:hover,.el-card:focus-visible{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(16,185,129,.5);}
+.el-card.open{border-color:var(--c2);box-shadow:var(--shadow-lg);}
+.el-emoji{font-size:2rem;line-height:1;}
+.el-card h3{font-size:1.15rem;font-weight:800;margin-top:10px;}
+.el-tag{
+  display:inline-block;margin-top:6px;
+  font-size:.74rem;font-weight:700;color:var(--c1);
+  background:#e0f7fa;border-radius:999px;padding:2px 11px;
+}
+.el-detail{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .45s ease,opacity .35s ease,margin .35s ease;
+}
+.el-card.open .el-detail{max-height:340px;opacity:1;margin-top:14px;}
+.el-detail p{font-size:.88rem;color:#4a6f7a;line-height:1.75;}
+.el-hint{
+  margin-top:12px;font-size:.72rem;font-weight:700;
+  color:#a9c2ca;letter-spacing:.04em;
+  transition:color .3s;
+}
+.el-card.open .el-hint{color:var(--c2);}
+
+/* ============ 氮循環 ============ */
+.cycle-steps{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.step{
+  display:flex;align-items:center;gap:9px;
+  background:#fff;border:1px solid var(--line);
+  border-radius:999px;padding:9px 18px 9px 10px;
+  font-size:.9rem;font-weight:700;color:var(--muted);
+  cursor:pointer;white-space:nowrap;
+  transition:transform .25s,background .25s,color .25s,border-color .25s,box-shadow .25s;
+}
+.step:hover{transform:translateY(-2px);border-color:var(--c2);color:var(--c1-d);}
+.step.active{
+  background:var(--grad);color:#fff;border-color:transparent;
+  box-shadow:0 10px 24px rgba(16,185,129,.3);
+}
+.step-num{
+  width:24px;height:24px;border-radius:50%;
+  display:grid;place-items:center;
+  font-size:.76rem;font-weight:800;
+  background:rgba(8,145,178,.12);color:var(--c1-d);
+  transition:.25s;
+}
+.step.active .step-num{background:rgba(255,255,255,.28);color:#fff;}
+
+.cycle-detail{
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);padding:28px 26px;
+  box-shadow:var(--shadow);min-height:200px;
+}
+.cycle-detail.animate{animation:fadeUp .38s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.cd-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.cd-badge{
+  font-size:.76rem;font-weight:800;color:#fff;
+  background:var(--grad);padding:4px 14px;border-radius:999px;
+  letter-spacing:.06em;
+}
+.cd-formula{
+  font-size:.85rem;font-weight:800;color:var(--c2);
+  background:#e9fbf5;border-radius:8px;padding:3px 12px;
+}
+.cycle-detail h3{font-size:1.32rem;font-weight:900;color:var(--c1-d);margin-top:12px;}
+.cd-text{margin-top:12px;color:#3d6570;font-size:.96rem;}
+.cd-note{
+  margin-top:18px;padding:14px 18px;
+  border-left:4px solid var(--c2);
+  background:#f0fdf9;border-radius:0 12px 12px 0;
+  font-size:.88rem;color:var(--c1-d);
+}
+.mnemonic-strip{
+  margin-top:26px;border-radius:var(--radius);
+  background:var(--grad);color:#fff;
+  padding:22px 20px;text-align:center;
+  box-shadow:0 16px 36px rgba(16,185,129,.28);
+}
+.mnemonic-strip p{font-size:.78rem;letter-spacing:.18em;font-weight:800;opacity:.85;}
+.mnemonic-strip strong{
+  display:block;margin-top:8px;
+  font-size:clamp(1.05rem,3.4vw,1.5rem);
+  font-weight:900;letter-spacing:.08em;
+}
+
+/* ============ 流程時間線 ============ */
+.timeline{margin-top:10px;}
+.tl-item{
+  display:grid;grid-template-columns:118px 1fr;gap:20px;
+  padding:18px 0;border-bottom:1px dashed var(--line);
+  transition:background .3s;
+}
+.tl-item:last-child{border-bottom:none;}
+.tl-time{
+  font-weight:900;color:var(--c1);
+  font-size:.88rem;letter-spacing:.02em;
+  padding-top:2px;
+}
+.tl-body h4{font-size:1rem;font-weight:800;margin-bottom:4px;}
+.tl-body p{font-size:.9rem;color:var(--muted);}
+.tl-item:hover .tl-body h4{color:var(--c1-d);}
+
+/* ============ 任務 ============ */
+.task-card{position:relative;}
+.task-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.76rem;font-weight:800;color:#fff;
+  background:var(--grad);border-radius:999px;
+  padding:4px 14px;margin-bottom:14px;letter-spacing:.06em;
+}
+.task-card h3{font-size:1.1rem;font-weight:800;margin-bottom:12px;}
+.task-card li{
+  position:relative;padding-left:22px;
+  font-size:.91rem;color:#3d6570;margin-bottom:9px;
+}
+.task-card li::before{
+  content:"✓";position:absolute;left:0;top:0;
+  color:var(--c2);font-weight:900;
+}
+.checklist{
+  margin-top:14px;background:#f4fbfc;border:1px dashed rgba(8,145,178,.25);
+  border-radius:14px;padding:16px 18px;
+}
+.checklist p{font-size:.82rem;font-weight:800;color:var(--c1-d);margin-bottom:8px;letter-spacing:.04em;}
+.checklist li{font-size:.88rem;color:var(--muted);padding-left:20px;position:relative;margin-bottom:6px;}
+.checklist li::before{content:"○";position:absolute;left:0;color:var(--c2);}
+
+/* ============ 表格 ============ */
+.table-wrap{
+  overflow-x:auto;border-radius:var(--radius);
+  border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);
+}
+table{width:100%;border-collapse:collapse;min-width:540px;}
+th,td{padding:15px 18px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--line);}
+th{background:#effafb;color:var(--c1-d);font-weight:800;white-space:nowrap;}
+td{color:#3d6570;}
+td:first-child{font-weight:800;color:var(--c1-d);white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+
+/* ============ 總結 ============ */
+.summary-box{
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);padding:34px 26px;
+  box-shadow:var(--shadow);text-align:center;
+}
+.chain{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:10px;margin:6px 0 30px;
+}
+.chain-item{
+  background:#f4fbfc;border:1px solid var(--line);
+  border-radius:14px;padding:11px 20px;
+  font-weight:800;color:var(--c1-d);font-size:.92rem;
+  transition:transform .25s,box-shadow .25s,background .25s;
+}
+.chain-item:hover{transform:translateY(-3px);background:#e9fbf5;box-shadow:0 10px 22px rgba(16,185,129,.16);}
+.chain-arrow{color:var(--c2);font-weight:900;font-size:1.15rem;}
+.mnemonic{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+  margin:14px 0 30px;
+}
+.mnemonic span{
+  background:var(--grad);color:#fff;
+  padding:12px 24px;border-radius:999px;
+  font-weight:900;font-size:clamp(.92rem,2.6vw,1.1rem);
+  letter-spacing:.06em;
+  box-shadow:0 12px 26px rgba(16,185,129,.26);
+  transition:transform .25s;
+}
+.mnemonic span:hover{transform:translateY(-3px) scale(1.03);}
+.key-points{
+  display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  text-align:left;margin-top:8px;
+}
+.kp{
+  background:#f4fbfc;border-radius:16px;padding:20px;
+  border:1px solid var(--line);
+}
+.kp h4{font-size:.98rem;font-weight:800;color:var(--c1-d);margin-bottom:6px;}
+.kp p{font-size:.88rem;color:var(--muted);}
+
+/* ============ 頁腳 ============ */
+footer{
+  text-align:center;padding:38px 20px 46px;
+  font-size:.82rem;color:#8aa8b1;
+  border-top:1px solid var(--line);
+  background:#fff;
+}
+
+/* ============ 回到頂部 ============ */
+#toTop{
+  position:fixed;right:20px;bottom:24px;z-index:120;
+  width:48px;height:48px;border-radius:50%;
+  border:none;cursor:pointer;
+  background:var(--grad);color:#fff;font-size:1.15rem;font-weight:800;
+  box-shadow:0 14px 30px rgba(16,185,129,.35);
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:.35s;
+}
+#toTop.show{opacity:1;visibility:visible;transform:none;}
+#toTop:hover{transform:translateY(-3px);}
+
+/* ============ 滾動進場 ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .75s ease,transform .75s ease;}
+.reveal.in{opacity:1;transform:none;}
+.reveal.d1{transition-delay:.08s;}
+.reveal.d2{transition-delay:.16s;}
+.reveal.d3{transition-delay:.24s;}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  .reveal{opacity:1;transform:none;}
+}
+
+/* ============ 手機微調 ============ */
+@media (max-width:640px){
+  .block{padding:54px 18px;}
+  .hero{padding:64px 18px 76px;}
+  .nav-inner{padding:9px 14px;gap:10px;}
+  .brand{font-size:.86rem;}
+  .nav-links a{padding:6px 11px;font-size:.78rem;}
+  .card{padding:22px 18px;}
+  .cycle-detail{padding:22px 18px;}
+  .tl-item{grid-template-columns:1fr;gap:6px;}
+  .tl-time{color:var(--c2);}
+  #toTop{right:14px;bottom:16px;width:44px;height:44px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 導覽 ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#cover" class="brand"><span class="brand-dot"></span>校園共生池</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#goals">學習目標</a>
+      <a href="#elements">五要素</a>
+      <a href="#cycle">氮循環</a>
+      <a href="#flow">流程</a>
+      <a href="#tasks">任務</a>
+      <a href="#assess">評估</a>
+      <a href="#summary">總結</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 1. 封面 ============ -->
+<section id="cover" class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">小六常識科・生態與環境</span>
+    <h1>參觀校園共生池<br><span>魚菜共生的理念與原理</span></h1>
+    <p class="lede">魚的排泄物，為甚麼會變成菜的营养？一趟走出課室的觀察之旅，讓你親眼看見大自然的循環智慧。</p>
+    <div class="hero-tags">
+      <span>🐟 魚</span>
+      <span>🌿 菜</span>
+      <span>🦠 細菌</span>
+      <span>💧 水</span>
+      <span>☀️ 陽光</span>
+    </div>
+    <a href="#goals" class="cta">開始學習 ↓</a>
+  </div>
+</section>
+
+<!-- ============ 2. 學習目標 ============ -->
+<section id="goals">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">01 / Learning Goals</p>
+      <h2>這一課，我們要學會甚麼？</h2>
+      <p class="sec-sub">從知識、技能到態度，三個方向一起出發，讓你走進共生池時，眼睛、雙手和腦袋都準備好。</p>
+    </div>
+
+    <div class="grid-3">
+      <article class="card goal-card reveal">
+        <div class="goal-top">
+          <span class="goal-icon">📘</span>
+          <h3>知識</h3>
+        </div>
+        <ul>
+          <li>說出魚菜共生五要素的角色：魚、菜、細菌、水、陽光</li>
+          <li>描述氮循環三步：氨 → 亞硝酸鹽 → 硝酸鹽</li>
+          <li>解釋光合作用如何為整個系統提供能量</li>
+          <li>說明「水」作為運送媒介的作用</li>
+        </ul>
+      </article>
+
+      <article class="card goal-card reveal d1">
+        <div class="goal-top">
+          <span class="goal-icon">🔍</span>
+          <h3>技能</h3>
+        </div>
+        <ul>
+          <li>有系統地觀察共生池的水色、魚、菜根與氣泡</li>
+          <li>把五張卡拼成一個正確的循環圖</li>
+          <li>用「因為……所以……」口頭說出因果關係</li>
+          <li>與組員分工合作、輪流記錄與匯報</li>
+        </ul>
+      </article>
+
+      <article class="card goal-card reveal d2">
+        <div class="goal-top">
+          <span class="goal-icon">💚</span>
+          <h3>態度</h3>
+        </div>
+        <ul>
+          <li>欣賞大自然萬物互相依存的共生智慧</li>
+          <li>愛護池中生物：不拍打、不投餵、不捕捉</li>
+          <li>珍惜水資源，明白循環再用的價值</li>
+          <li>尊重組員意見，耐心聆聽與合作</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. 五要素角色 ============ -->
+<section id="elements" class="alt">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">02 / Five Elements</p>
+      <h2>五要素角色：缺一不可的共生團隊</h2>
+      <p class="sec-sub">魚菜共生不是「魚 + 菜」這麼簡單，而是五個角色各司其職、互相支撐的系統。</p>
+    </div>
+
+    <div class="toolbar reveal">
+      <p class="tip-text">👉 點擊卡片，看看每個角色在系統裡做甚麼。</p>
+      <button class="btn-mini" id="toggleAll" type="button">全部展開</button>
+    </div>
+
+    <div class="grid-el">
+      <article class="el-card reveal" data-el tabindex="0" role="button" aria-expanded="false">
+        <div class="el-emoji">🐟</div>
+        <h3>魚</h3>
+        <span class="el-tag">排廢者・養分起點</span>
+        <div class="el-detail">
+          <p>魚吃飼料後把蛋白質分解，經鰓和排泄物把含氮廢物「氨」排到水裡。牠是整個循環的養分起點，但氨太多會令牠自己生病。</p>
+        </div>
+        <p class="el-hint">點擊看角色</p>
+      </article>
+
+      <article class="el-card reveal d1" data-el tabindex="0" role="button" aria-expanded="false">
+        <div class="el-emoji">🌿</div>
+        <h3>菜（植物）</h3>
+        <span class="el-tag">吸收者・淨水高手</span>
+        <div class="el-detail">
+          <p>菜根浸在水裡，直接吸收硝酸鹽來製造蛋白質和葉綠素，長葉長根。它一邊吃「肥」，一邊把水變乾淨，是系統裡的天然濾水器。</p>
+        </div>
+        <p class="el-hint">點擊看角色</p>
+      </article>
+
+      <article class="el-card reveal d2" data-el tabindex="0" role="button" aria-expanded="false">
+        <div class="el-emoji">🦠</div>
+        <h3>細菌</h3>
+        <span class="el-tag">轉化者・隱形功臣</span>
+        <div class="el-detail">
+          <p>硝化細菌住在生物球、砂石和過濾棉的表面。牠把有毒的氨一步步轉成亞硝酸鹽，再轉成植物能用的硝酸鹽，是整個系統最關鍵的橋樑。</p>
+        </div>
+        <p class="el-hint">點擊看角色</p>
+      </article>
+
+      <article class="el-card reveal d3" data-el tabindex="0" role="button" aria-expanded="false">
+        <div class="el-emoji">💧</div>
+        <h3>水</h3>
+        <span class="el-tag">媒介・運輸大隊</span>
+        <div class="el-detail">
+          <p>水把養分送到植物根部、把廢物帶到細菌區、再把潔淨的水送回魚池。它像一條馬路，讓所有角色可以「互相見面」。</p>
+        </div>
+        <p class="el-hint">點擊看角色</p>
+      </article>
+
+      <article class="el-card reveal d3" data-el tabindex="0" role="button" aria-expanded="false">
+        <div class="el-emoji">☀️</div>
+        <h3>陽光</h3>
+        <span class="el-tag">能量來源・幕後老闆</span>
+        <div class="el-detail">
+          <p>植物靠光合作用把光能變成養分，同時放出氧氣供魚呼吸。沒有陽光，植物長不大，整個循環就沒有能量來源。</p>
+        </div>
+        <p class="el-hint">點擊看角色</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. 氮循環 ============ -->
+<section id="cycle">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">03 / Nitrogen Cycle</p>
+      <h2>氮循環：由「廢物」到「肥料」的旅程</h2>
+      <p class="sec-sub">點擊下面任何一步，看看那一步發生了甚麼事。</p>
+    </div>
+
+    <div class="cycle-steps reveal" id="cycleSteps"></div>
+
+    <div class="cycle-detail reveal" id="cycleDetail">
+      <div class="cd-head">
+        <span class="cd-badge" id="cdNum">步驟 1</span>
+        <span class="cd-formula" id="cdFormula">NH₃</span>
+      </div>
+      <h3 id="cdTitle">魚排氨</h3>
+      <p class="cd-text" id="cdText"></p>
+      <p class="cd-note" id="cdNote"></p>
+    </div>
+
+    <div class="mnemonic-strip reveal">
+      <p>記憶口訣</p>
+      <strong>魚排氨、菌轉化、菜吸收、水回流、陽光供能</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. 35分鐘流程 ============ -->
+<section id="flow" class="alt">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">04 / Lesson Flow</p>
+      <h2>35 分鐘流程摘要</h2>
+      <p class="sec-sub">由集合到總結，一節課走完「觀察 → 拼圖 → 表達」三個階段。</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-time">0–5 分鐘</div>
+        <div class="tl-body">
+          <h4>集合・安全與觀察規則</h4>
+          <p>在共生池旁集合，說明三不原則：不拍打水面、不投餵、不捕捉生物；分組並派發觀察記錄表。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">5–10 分鐘</div>
+        <div class="tl-body">
+          <h4>導入提問</h4>
+          <p>「魚和菜為甚麼可以一起生活？」「魚的排泄物去了哪裡？」用兩個問題引出「共生」與「循環」的概念。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10–18 分鐘</div>
+        <div class="tl-body">
+          <h4>實地觀察</h4>
+          <p>分組用眼看、鼻聞（不觸摸）觀察：水是否清澈？魚的游動如何？菜根是甚麼顏色？水面有沒有氣泡？即時記錄在表上。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18–26 分鐘</div>
+        <div class="tl-body">
+          <h4>小組拼循環圖</h4>
+          <p>把「魚、細菌、菜、水、陽光」五張卡排成正確的循環，並用箭頭畫出養分與水的流向，找出細菌藏在哪裡。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">26–32 分鐘</div>
+        <div class="tl-body">
+          <h4>口頭匯報</h4>
+          <p>每組派代表，用「因為……所以……」說出最少兩組因果關係，例如「因為細菌把氨轉化，所以魚不會中毒」。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">32–35 分鐘</div>
+        <div class="tl-body">
+          <h4>總結・延伸</h4>
+          <p>齊讀口訣「魚排氨、菌轉化、菜吸收、水回流、陽光供能」，佈置回家觀察記錄任務。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 學生任務 ============ -->
+<section id="tasks">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">05 / Student Tasks</p>
+      <h2>學生任務：觀察 ＋ 拼圖 ＋ 表達</h2>
+      <p class="sec-sub">三個任務層層遞進，從「看見」到「說得清楚」。</p>
+    </div>
+
+    <div class="grid-3">
+      <article class="card task-card reveal">
+        <span class="task-badge">任務 A</span>
+        <h3>🔍 實地觀察記錄</h3>
+        <ul>
+          <li>水：清澈還是混濁？有沒有異味？</li>
+          <li>魚：游動活躍嗎？集中在哪裡？</li>
+          <li>菜：根是白色還是褐色？根毛多嗎？</li>
+          <li>其他：水面有氣泡嗎？過濾區有甚麼？</li>
+        </ul>
+        <div class="checklist">
+          <p>觀察小提醒</p>
+          <ul>
+            <li>先看整體，再看細節</li>
+            <li>用比較：這一池和魚缸有甚麼不同？</li>
+            <li>記錄要用具體描述，不寫「很靚」</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card task-card reveal d1">
+        <span class="task-badge">任務 B</span>
+        <h3>🧩 小組拼循環圖</h3>
+        <ul>
+          <li>把五張要素卡排成一個閉合的循環</li>
+          <li>用箭頭標出養分流向與水流方向</li>
+          <li>指出「細菌」應該放在哪兩個角色之間</li>
+          <li>向組員解釋為甚麼要這樣排</li>
+        </ul>
+        <div class="checklist">
+          <p>檢查清單</p>
+          <ul>
+            <li>循環有沒有「缺口」？</li>
+            <li>陽光的位置放對了嗎？</li>
+            <li>水是不是連接了所有角色？</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card task-card reveal d2">
+        <span class="task-badge">任務 C</span>
+        <h3>🗣️ 口頭說因果</h3>
+        <ul>
+          <li>用「因為……所以……」說出最少兩組關係</li>
+          <li>例如：因為細菌把氨轉化，所以水質變好</li>
+          <li>例如：因為菜吸收硝酸鹽，所以水可以回流魚池</li>
+          <li>組員要輪流發言，其他人專心聆聽</li>
+        </ul>
+        <div class="checklist">
+          <p>表達小貼士</p>
+          <ul>
+            <li>先說「因為」，停一秒，再說「所以」</li>
+            <li>配合手勢指向共生池的位置</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. 評估與延伸 ============ -->
+<section id="assess" class="alt">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">06 / Assessment &amp; Extension</p>
+      <h2>評估與延伸</h2>
+      <p class="sec-sub">怎樣知道學生真的學會了？看他們能否把「看過的」變成「說得出的」。</p>
+    </div>
+
+    <div class="table-wrap reveal" style="margin-bottom:26px;">
+      <table>
+        <thead>
+          <tr>
+            <th>評估面向</th>
+            <th>觀察指標</th>
+            <th>表現示例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>知識</td>
+            <td>能指出五要素及其角色</td>
+            <td>說出「細菌負責把氨轉成硝酸鹽」</td>
+          </tr>
+          <tr>
+            <td>技能</td>
+            <td>能排出正確的循環圖</td>
+            <td>小組拼圖無缺口，箭頭方向正確</td>
+          </tr>
+          <tr>
+            <td>表達</td>
+            <td>能用因果句式說明關係</td>
+            <td>「因為菜吸收硝酸鹽，所以水變乾淨」</td>
+          </tr>
+          <tr>
+            <td>態度</td>
+            <td>能愛護生物、珍惜水資源</td>
+            <td>不拍打水面、主動提醒同學守規則</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2">
+      <article class="card reveal">
+        <h3 style="font-size:1.08rem;font-weight:800;color:var(--c1-d);margin-bottom:14px;">🏠 課後延伸活動</h3>
+        <ul style="list-style:none;padding:0;">
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
+            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">1.</span>
+            用膠樽設計一個迷你魚菜共生瓶，一星期後拍照記錄。
+          </li>
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
+            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">2.</span>
+            連續七天記錄家中魚缸或盆栽的水色變化，嘗試解釋原因。
+          </li>
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
+            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">3.</span>
+            訪問家人：以前種菜要施肥，現在魚菜共生為甚麼不用？
+          </li>
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;">
+            <span style="position:absolute;left:0;color:var(--c2);font-weight:900;">4.</span>
+            畫一張「我家的共生循環圖」，下節課與同學分享。
+          </li>
+        </ul>
+      </article>
+
+      <article class="card reveal d1">
+        <h3 style="font-size:1.08rem;font-weight:800;color:var(--c1-d);margin-bottom:14px;">💡 常見迷思拆解</h3>
+        <ul style="list-style:none;padding:0;">
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
+            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
+            「魚菜共生就是魚和菜一起養。」→ 其實關鍵是「細菌」與「循環」。
+          </li>
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
+            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
+            「水會越來越臭。」→ 只要細菌與植物正常工作，水會越來越清。
+          </li>
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;margin-bottom:10px;">
+            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
+            「植物靠魚的糞便直接吸收養分。」→ 要經過細菌兩步轉化才行。
+          </li>
+          <li style="position:relative;padding-left:22px;font-size:.92rem;color:#3d6570;">
+            <span style="position:absolute;left:0;color:#f59e0b;font-weight:900;">✕</span>
+            「不用陽光也可以。」→ 沒有陽光，植物無法光合作用，系統就斷電。
+          </li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. 重點總結 ============ -->
+<section id="summary">
+  <div class="block">
+    <div class="sec-head reveal">
+      <p class="sec-kicker">07 / Summary</p>
+      <h2>重點總結</h2>
+      <p class="sec-sub">一句口訣、一條因果鏈，把整課帶回家。</p>
+    </div>
+
+    <div class="summary-box reveal">
+      <div class="chain">
+        <div class="chain-item">魚排廢物</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-item">細菌轉化</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-item">植物吸收</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-item">水質淨化</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-item">回流魚池</div>
+      </div>
+
+      <div class="mnemonic">
+        <span>魚排氨</span>
+        <span>菌轉化</span>
+        <span>菜吸收</span>
+        <span>水回流</span>
+        <span>陽光供能</span>
+      </div>
+
+      <div class="key-points">
+        <div class="kp">
+          <h4>① 五要素，缺一不可</h4>
+          <p>魚、菜、細菌、水、陽光各有角色，任何一個消失，循環就會斷開。</p>
+        </div>
+        <div class="kp">
+          <h4>② 細菌是關鍵橋樑</h4>
+          <p>氨 → 亞硝酸鹽 → 硝酸鹽，兩步硝化作用把毒物變成肥料。</p>
+        </div>
+        <div class="kp">
+          <h4>③ 水是運送媒介</h4>
+          <p>水把養分、廢物、氧氣送到每一個角色手上，讓循環真正「連起來」。</p>
+        </div>
+        <div class="kp">
+          <h4>④ 陽光是能量源頭</h4>
+          <p>植物靠光合作用製造養分並放出氧氣，整個系統靠它供能。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  校園共生池學習單元｜小六常識科　·　魚菜共生的理念與原理
+</footer>
+
+<button id="toTop" type="button" aria-label="回到頂部">↑</button>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- 1. 滾動進場動畫 ---------- */
+  var revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ---------- 2. 五要素卡片互動 ---------- */
+  var elCards = Array.prototype.slice.call(document.querySelectorAll("[data-el]"));
+  elCards.forEach(function (card) {
+    function toggle() {
+      card.classList.toggle("open");
+      card.setAttribute("aria-expanded", card.classList.contains("open") ? "true" : "false");
+    }
+    card.addEventListener("click", toggle);
+    card.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " " || ev.key === "Spacebar") {
+        ev.preventDefault();
+        toggle();
+      }
+    });
+  });
+
+  var toggleAllBtn = document.getElementById("toggleAll");
+  if (toggleAllBtn) {
+    toggleAllBtn.addEventListener("click", function () {
+      var allOpen = elCards.every(function (c) { return c.classList.contains("open"); });
+      elCards.forEach(function (c) {
+        c.classList.toggle("open", !allOpen);
+        c.setAttribute("aria-expanded", (!allOpen) ? "true" : "false");
+      });
+      toggleAllBtn.textContent = allOpen ? "全部展開" : "全部收起";
+    });
+  }
+
+  /* ---------- 3. 氮循環步驟 ---------- */
+  var cycleData = [
+    {
+      name: "魚排氨",
+      formula: "NH₃",
+      text: "魚吃飼料後把蛋白質分解，經鰓和排泄物把含氮廢物「氨」排到水裡。氨對魚有毒，濃度太高會令魚生病、甚至死亡。",
+      note: "觀察提示：如果水變得混濁或有異味，可能是氨累積了。"
+    },
+    {
+      name: "菌轉化（第一步）",
+      formula: "NH₃ → NO₂⁻",
+      text: "住在生物球和砂石表面的亞硝化細菌，把氨氧化成「亞硝酸鹽」。這一步仍然是毒物，但已經是淨化的第一步。",
+      note: "細菌住在哪裡？生物球、砂石、過濾棉的表面，牠們需要充足的氧氣。"
+    },
+    {
+      name: "菌轉化（第二步）",
+      formula: "NO₂⁻ → NO₃⁻",
+      text: "另一種硝化細菌把亞硝酸鹽再氧化成「硝酸鹽」。硝酸鹽毒性低，正是植物最喜歡的氮肥。兩步合起來就是「硝化作用」。",
+      note: "這兩步是整個系統的心臟，細菌愈健康，水就愈乾淨。"
+    },
+    {
+      name: "菜吸收",
+      formula: "NO₃⁻ → 植物生長",
+      text: "蔬菜的根浸在水裡，直接吸收硝酸鹽，用來製造蛋白質和葉綠素，長葉、長根。植物一邊吸收養分，一邊把水「過濾」乾淨。",
+      note: "根毛愈多，吸收面積愈大，淨水效果就愈好。"
+    },
+    {
+      name: "水回流",
+      formula: "水泵 → 魚池",
+      text: "潔淨的水由水泵抽回魚池，魚又可以在乾淨的水中生活。整個系統幾乎不用換水，只需補回蒸發掉的水分，非常節省水資源。",
+      note: "陽光在背後供能：植物靠光合作用製造養分並放出氧氣，供魚呼吸。"
+    }
+  ];
+
+  var stepsWrap = document.getElementById("cycleSteps");
+  var panel = document.getElementById("cycleDetail");
+  var cdNum = document.getElementById("cdNum");
+  var cdFormula = document.getElementById("cdFormula");
+  var cdTitle = document.getElementById("cdTitle");
+  var cdText = document.getElementById("cdText");
+  var cdNote = document.getElementById("cdNote");
+
+  function renderStep(index) {
+    var d = cycleData[index];
+    cdNum.textContent = "步驟 " + (index + 1);
+    cdFormula.textContent = d.formula;
+    cdTitle.textContent = d.name;
+    cdText.textContent = d.text;
+    cdNote.textContent = d.note;
+
+    panel.classList.remove("animate");
+    void panel.offsetWidth;   /* 強制重排，重啟動畫 */
+    panel.classList.add("animate");
+  }
+
+  function setStep(index) {
+    var btns = stepsWrap.querySelectorAll(".step");
+    Array.prototype.forEach.call(btns, function (b, k) {
+      b.classList.toggle("active", k === index);
+    });
+    renderStep(index);
+  }
+
+  if (stepsWrap) {
+    cycleData.forEach(function (d, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "step" + (i === 0 ? " active" : "");
+      btn.innerHTML = '<span class="step-num">' + (i + 1) + "</span><span>" + d.name + "</span>";
+      btn.addEventListener("click", function () { setStep(i); });
+      stepsWrap.appendChild(btn);
+    });
+    renderStep(0);
+  }
+
+  /* ---------- 4. 導覽列目前位置高亮 ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll("#navLinks a"));
+  var sections = navLinks
+    .map(function (a) { return document.querySelector(a.getAttribute("href")); })
+    .filter(Boolean);
+
+  if ("IntersectionObserver" in window && sections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = "#" + entry.target.id;
+          navLinks.forEach(function (a) {
+            a.classList.toggle("active", a.getAttribute("href") === id);
+          });
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    sections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* ---------- 5. 回到頂部 ---------- */
+  var toTop = document.getElementById("toTop");
+  window.addEventListener("scroll", function () {
+    toTop.classList.toggle("show", window.scrollY > 520);
+  }, { passive: true });
+
+  toTop.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
+</script>
+</body>
+</html>
