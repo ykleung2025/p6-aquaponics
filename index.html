@@ -72,13 +72,22 @@ button{font-family:inherit;}
 }
 .nav-links a:hover{background:#e0f7fa;color:var(--c1-d);}
 .nav-links a.active{background:var(--grad);color:#fff;box-shadow:0 6px 16px rgba(16,185,129,.28);}
+.nav-games{
+  display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;
+}
 .nav-game{
-  flex-shrink:0;margin-left:4px;text-decoration:none;white-space:nowrap;
+  flex-shrink:0;text-decoration:none;white-space:nowrap;
   background:var(--grad);color:#fff;font-weight:800;font-size:.82rem;
   padding:7px 14px;border-radius:999px;
   box-shadow:0 8px 18px rgba(16,185,129,.28);
 }
 .nav-game:hover{filter:brightness(1.05);color:#fff;}
+.nav-game-alt{
+  background:#fff;color:var(--c1-d);
+  border:1.5px solid rgba(8,145,178,.35);
+  box-shadow:none;
+}
+.nav-game-alt:hover{filter:none;background:#f0fdfa;color:var(--c1-d);}
 
 /* ============ 封面 ============ */
 .hero{
@@ -150,6 +159,10 @@ button{font-family:inherit;}
   box-shadow:0 10px 24px rgba(8,145,178,.12);
 }
 .cta-game:hover{background:#f0fdfa;color:var(--c1-d);box-shadow:0 16px 32px rgba(8,145,178,.18);}
+.compare-note{
+  margin:14px auto 0;max-width:560px;
+  font-size:.86rem;color:#5b7c87;
+}
 
 /* ============ 區塊排版 ============ */
 .block{max-width:1080px;margin:0 auto;padding:70px 22px;}
@@ -361,6 +374,15 @@ section.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px s
   box-shadow:0 10px 22px rgba(16,185,129,.28);
 }
 .task-game:hover{filter:brightness(1.05);color:#fff;}
+.task-games{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+.task-games .task-game{margin-top:0;}
+.task-game-alt{
+  background:#fff;color:var(--c1-d);
+  border:1.5px solid rgba(8,145,178,.35);
+  box-shadow:none;
+}
+.task-game-alt:hover{filter:none;background:#f0fdfa;color:var(--c1-d);}
+.task-compare{margin:12px 0 0;max-width:none;text-align:left;}
 
 /* ============ 表格 ============ */
 .table-wrap{
@@ -450,6 +472,10 @@ footer{
 }
 
 /* ============ 手機微調 ============ */
+@media (max-width:980px){
+  .nav-inner{flex-wrap:wrap;}
+  .nav-games{margin-left:auto;}
+}
 @media (max-width:640px){
   .block{padding:54px 18px;}
   .hero{padding:64px 18px 76px;}
@@ -457,9 +483,10 @@ footer{
   .brand{font-size:.86rem;}
   .nav-links{order:3;flex:1 0 100%;margin-left:0;}
   .nav-links a{padding:6px 11px;font-size:.78rem;}
-  .nav-game{margin-left:auto;font-size:.78rem;padding:7px 12px;}
+  .nav-games{margin-left:auto;justify-content:flex-end;}
+  .nav-game{font-size:.78rem;padding:7px 12px;}
   .hero-actions{flex-direction:column;align-items:center;}
-  .hero-actions .cta{width:min(100%,280px);text-align:center;}
+  .hero-actions .cta{width:min(100%,340px);text-align:center;}
   .card{padding:22px 18px;}
   .cycle-detail{padding:22px 18px;}
   .tl-item{grid-template-columns:1fr;gap:6px;}
@@ -483,7 +510,10 @@ footer{
       <a href="#assess">評估</a>
       <a href="#summary">總結</a>
     </nav>
-    <a class="nav-game" href="cycle.html">拼循環圖遊戲</a>
+    <div class="nav-games">
+      <a class="nav-game" href="cycle.html">拼循環圖遊戲</a>
+      <a class="nav-game nav-game-alt" href="cycle-deepseek.html">拼循環圖（DeepSeek 版）</a>
+    </div>
   </div>
 </header>
 
@@ -505,7 +535,9 @@ footer{
     <div class="hero-actions">
       <a href="#goals" class="cta">開始學習 ↓</a>
       <a href="cycle.html" class="cta cta-game">拼循環圖遊戲</a>
+      <a href="cycle-deepseek.html" class="cta cta-game">拼循環圖（DeepSeek 版）</a>
     </div>
+    <p class="compare-note">兩款拼循環圖供課堂比較，玩法各自獨立。</p>
   </div>
 </section>
 
@@ -759,7 +791,11 @@ footer{
             <li>水是不是連接了所有角色？</li>
           </ul>
         </div>
-        <a class="task-game" href="cycle.html">拼循環圖遊戲</a>
+        <div class="task-games">
+          <a class="task-game" href="cycle.html">拼循環圖遊戲</a>
+          <a class="task-game task-game-alt" href="cycle-deepseek.html">拼循環圖（DeepSeek 版）</a>
+        </div>
+        <p class="compare-note task-compare">兩款都可試玩，方便課堂比較。</p>
       </article>
 
       <article class="card task-card reveal d2">
