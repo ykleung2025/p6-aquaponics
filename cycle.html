@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拼循環圖遊戲｜魚菜共生</title>
+<meta name="description" content="小六魚菜共生拼循環圖：把魚、益菌、植物和水拖到正確位置。">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --c1: #0891b2;
+  --c2: #10b981;
+  --c1-d: #0e6b83;
+  --ink: #0d2b33;
+  --muted: #3d6570;
+  --line: rgba(8, 145, 178, .16);
+  --bg: #f5fbfc;
+  --radius: 20px;
+  --shadow: 0 12px 32px rgba(8, 145, 178, .10);
+  --tray-space: 0px;
+}
+html { scroll-behavior: smooth; scroll-padding-top: 72px; scroll-padding-bottom: var(--tray-space); }
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "WenQuanYi Micro Hei", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body.is-dragging { cursor: grabbing; user-select: none; }
+h1, h2, h3, p { margin: 0; }
+button, a { font-family: inherit; }
+.bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5; }
+.b1 { width: 340px; height: 340px; background: #67e8f9; top: -120px; left: -90px; }
+.b2 { width: 300px; height: 300px; background: #6ee7b7; right: -80px; bottom: 10%; }
+.page { position: relative; z-index: 1; }
+
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 255, 255, .9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 1080px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 18px;
+}
+.brand {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 800; color: var(--c1-d); text-decoration: none; flex-shrink: 0;
+}
+.brand-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, .15);
+}
+.nav-links { display: flex; gap: 6px; margin-left: auto; }
+.nav-links a {
+  text-decoration: none; color: var(--muted);
+  font-weight: 700; font-size: .88rem;
+  padding: 7px 12px; border-radius: 999px;
+}
+.nav-links a:hover { background: #e0f7fa; color: var(--c1-d); }
+.nav-links a[aria-current="page"] {
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 22px 18px 28px; }
+.intro { margin-bottom: 16px; }
+.eyebrow {
+  display: inline-block; margin-bottom: 8px;
+  font-size: .75rem; font-weight: 800; letter-spacing: .12em;
+  color: var(--c1-d); background: rgba(255, 255, 255, .8);
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px;
+}
+h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 900; line-height: 1.25; }
+.lede { margin-top: 8px; color: var(--muted); font-size: 1rem; max-width: 46rem; }
+
+.win {
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #0891b2 0%, #10b981 100%);
+  color: #fff; border-radius: var(--radius);
+  padding: 26px 22px 22px; text-align: center;
+  box-shadow: 0 16px 36px rgba(16, 185, 129, .28);
+}
+.win-kicker {
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  font-weight: 900; letter-spacing: .14em; line-height: 1.25;
+}
+.win h2 { margin-top: 6px; font-size: 1.25rem; font-weight: 800; line-height: 1.4; }
+.win p { margin-top: 8px; font-size: 1rem; line-height: 1.65; }
+.chain {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 8px; margin-top: 14px;
+}
+.chain span {
+  background: rgba(255, 255, 255, .18);
+  border-radius: 999px; padding: 6px 12px;
+  font-weight: 800; line-height: 1.35;
+}
+.chain i { font-style: normal; font-weight: 900; }
+.win-btn, .reset-btn {
+  min-height: 48px; border: none; border-radius: 999px;
+  font-weight: 800; font-size: 1rem; cursor: pointer;
+}
+.win-btn {
+  margin-top: 16px; padding: 0 26px; background: #fff; color: var(--c1-d);
+}
+.side-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.reset-btn {
+  width: auto; margin: 0; padding: 0 16px; white-space: nowrap;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+}
+.win-btn:hover, .reset-btn:hover { filter: brightness(1.05); }
+.win-btn:focus-visible, .reset-btn:focus-visible,
+.piece:focus-visible, .drop-btn:focus-visible, .nav-links a:focus-visible, .brand:focus-visible {
+  outline: 3px solid #0e7490; outline-offset: 3px;
+}
+
+.layout { display: grid; gap: 16px; align-items: start; }
+.board-note {
+  text-align: center; color: var(--c1-d); font-weight: 800;
+  font-size: .92rem; margin-bottom: 10px;
+}
+.cycle { display: grid; gap: 8px; }
+.slot {
+  background: #fff; border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: var(--shadow); padding: 12px;
+  min-width: 0;
+}
+.slot-head { display: flex; align-items: flex-start; gap: 8px; }
+.badge {
+  flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #e0f7fa; color: var(--c1-d); font-weight: 900; line-height: 1;
+}
+.slot-titles { flex: 1; min-width: 0; }
+.slot-titles h3 { font-size: 1.05rem; font-weight: 900; line-height: 1.35; color: var(--c1-d); }
+.slot-titles p { color: var(--muted); font-size: .92rem; line-height: 1.45; margin-top: 2px; }
+.mark {
+  visibility: hidden; flex: 0 0 auto;
+  font-size: .75rem; font-weight: 800; line-height: 1.3;
+  color: #047857; background: #d1fae5;
+  border-radius: 999px; padding: 4px 8px; white-space: nowrap;
+}
+.slot.is-filled .mark { visibility: visible; }
+.drop {
+  margin-top: 10px; min-height: 84px;
+  border: 2px dashed rgba(8, 145, 178, .4);
+  border-radius: 14px; background: #f4fbfc;
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px;
+}
+.drop-btn {
+  width: 100%; min-height: 72px;
+  border: none; background: transparent; color: var(--c1-d);
+  font-weight: 800; font-size: 1rem; border-radius: 12px; cursor: pointer;
+  line-height: 1.4;
+}
+.drop-ready { display: none; }
+body.has-selection .slot:not(.is-filled) .drop {
+  border-color: var(--c2); background: #ecfdf5;
+}
+body.has-selection .slot:not(.is-filled) .drop-idle { display: none; }
+body.has-selection .slot:not(.is-filled) .drop-ready { display: inline; }
+.slot.is-hot { border-color: var(--c1); box-shadow: 0 0 0 4px rgba(8, 145, 178, .2); }
+.slot.is-hot .drop { border-style: solid; border-color: var(--c1); background: #e0f7fa; }
+.slot.is-filled { border-color: rgba(16, 185, 129, .55); }
+.slot.is-filled .drop { border-style: solid; border-color: var(--c2); background: #ecfdf5; }
+.slot.shake { animation: shake .35s ease; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  30% { transform: translateX(-5px); }
+  70% { transform: translateX(5px); }
+}
+@keyframes pop { from { transform: scale(.97); } to { transform: none; } }
+.slot.is-filled .piece { animation: pop .28s ease; }
+
+.arrow, .hub { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.arrow-label {
+  font-size: .85rem; font-weight: 800; line-height: 1.35; text-align: center;
+  color: var(--c1-d); background: #fff;
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px;
+}
+.chevron { width: 36px; height: 36px; display: block; overflow: visible; color: var(--c2); flex: 0 0 auto; }
+.chevron { transform: rotate(90deg); }
+.arrow-41 .chevron { transform: rotate(-90deg); }
+.hub-ring {
+  width: 76px; height: 76px; border-radius: 50%;
+  border: 4px dashed var(--c2); background: #fff;
+  display: grid; place-items: center;
+  color: var(--c1-d); font-weight: 900; font-size: 1.05rem;
+  letter-spacing: .12em; line-height: 1.2;
+}
+
+.side {
+  background: rgba(255, 255, 255, .97);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 14px;
+}
+.side h2 { font-size: 1rem; font-weight: 900; color: var(--c1-d); }
+.side-help { margin-top: 4px; color: var(--muted); font-size: .85rem; line-height: 1.45; }
+.tip {
+  margin-top: 10px; border-radius: 14px; padding: 10px 12px;
+  background: #f4fbfc; border: 1px solid var(--line);
+}
+.tip.is-bad { background: #fff7ed; border-color: #fdba74; }
+.tip.is-ok { background: #ecfdf5; border-color: #6ee7b7; }
+.tip-kicker { font-size: .78rem; font-weight: 900; letter-spacing: .08em; color: var(--c1-d); line-height: 1.4; }
+.tip.is-bad .tip-kicker { color: #9a3412; }
+.tip.is-ok .tip-kicker { color: #047857; }
+.tip-text { margin-top: 2px; font-size: .95rem; line-height: 1.55; color: var(--ink); }
+.pieces {
+  margin-top: 10px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.tray-empty {
+  margin-top: 8px; text-align: center; color: var(--c1-d); font-weight: 800;
+}
+.piece {
+  width: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; text-align: center;
+  min-height: 112px; padding: 10px 8px 12px;
+  border: 1px solid var(--line); border-radius: 16px;
+  background: #fff; color: inherit; cursor: grab;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+  -webkit-touch-callout: none; -webkit-user-drag: none;
+}
+.piece:active { cursor: grabbing; }
+.piece.is-selected { border-color: var(--c1); box-shadow: 0 0 0 3px rgba(8, 145, 178, .28); }
+.piece.is-dragging { opacity: .4; }
+.piece.is-locked { cursor: default; touch-action: auto; box-shadow: none; }
+.slot.is-filled .piece {
+  flex-direction: row; text-align: left; min-height: 72px;
+  border-color: transparent; background: transparent; animation: pop .28s ease;
+}
+.icon {
+  width: 64px; height: 64px; flex: 0 0 auto;
+  display: grid; place-items: center;
+  background: #f4fbfc; border-radius: 18px;
+  overflow: visible;
+}
+.icon svg { width: 56px; height: 56px; display: block; overflow: visible; }
+.piece-text { display: flex; flex-direction: column; line-height: 1.3; }
+.piece-name { font-size: 1.15rem; font-weight: 900; line-height: 1.3; }
+.piece-sub { font-size: .82rem; font-weight: 700; color: var(--muted); line-height: 1.35; }
+.ghost {
+  position: fixed; z-index: 200; margin: 0; pointer-events: none;
+  box-shadow: 0 18px 40px rgba(14, 107, 131, .28);
+  width: auto; max-width: none;
+}
+
+@media (min-width: 880px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 320px; }
+  .cycle {
+    grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr);
+    grid-template-areas:
+      "s1 a12 s2"
+      "a41 hub a23"
+      "s4 a34 s3";
+    gap: 10px 8px;
+  }
+  .slot-fish { grid-area: s1; }
+  .arrow-12 { grid-area: a12; }
+  .slot-bacteria { grid-area: s2; }
+  .arrow-23 { grid-area: a23; }
+  .slot-plant { grid-area: s3; }
+  .arrow-34 { grid-area: a34; }
+  .slot-water { grid-area: s4; }
+  .arrow-41 { grid-area: a41; }
+  .hub { grid-area: hub; }
+  .arrow { flex-direction: column; min-height: 72px; }
+  .arrow-12 .chevron { transform: none; }
+  .arrow-23 .chevron { transform: rotate(90deg); }
+  .arrow-34 .chevron { transform: rotate(180deg); }
+  .arrow-41 .chevron { transform: rotate(-90deg); }
+  .hub-ring { width: 88px; height: 88px; }
+  .pieces { grid-template-columns: 1fr; }
+  .piece { flex-direction: row; text-align: left; justify-content: flex-start; gap: 12px; min-height: 88px; padding: 8px 12px; }
+  .side { position: sticky; top: 74px; }
+}
+
+@media (max-width: 879px) {
+  .wrap { padding-top: 12px; }
+  .intro { margin-bottom: 6px; }
+  .eyebrow { margin-bottom: 4px; }
+  .lede { margin-top: 4px; font-size: .92rem; line-height: 1.45; }
+  .board-note { margin-bottom: 4px; }
+  .cycle { gap: 4px; }
+  .side {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    border-radius: 18px 18px 0 0;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+  .side-help { display: none; }
+  .tip { margin-top: 8px; padding: 8px 10px; }
+  .slot { padding: 8px 10px; }
+  .badge { width: 28px; height: 28px; font-size: .92rem; }
+  .drop { min-height: 56px; margin-top: 6px; }
+  .drop-btn { min-height: 48px; }
+  .hub-ring {
+    width: auto; height: auto; min-height: 0;
+    padding: 4px 12px; border-radius: 999px; border-width: 2px;
+    font-size: .95rem; letter-spacing: .08em;
+  }
+  .nav-links a { padding: 6px 8px; font-size: .8rem; }
+}
+@media (max-width: 640px) {
+  .pieces { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+  .piece { min-height: 0; padding: 8px 4px 10px; gap: 2px; }
+  .icon { width: 52px; height: 52px; border-radius: 16px; }
+  .icon svg { width: 46px; height: 46px; }
+  .piece-name { font-size: 1.02rem; }
+  .piece-sub { font-size: .72rem; }
+}
+
+footer {
+  text-align: center; color: #8aa8b1; font-size: .82rem;
+  padding: 8px 16px 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+<div class="page">
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html"><span class="brand-dot"></span>校園共生池</a>
+      <nav class="nav-links">
+        <a href="index.html">返回課文</a>
+        <a href="cycle.html" aria-current="page">拼循環圖遊戲</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <p class="eyebrow">小六常識科・課堂活動</p>
+      <h1 id="title" tabindex="-1">拼循環圖</h1>
+      <p class="lede">魚排出的氨，由益菌轉成養分；植物吸收養分並把水變乾淨，清水再回到魚缸。按住拖到空位，或先點選再點空位。</p>
+    </div>
+
+    <section class="win" id="win" hidden>
+      <p class="win-kicker" id="winTitle">過關</p>
+      <h2>循環接起來了</h2>
+      <p>魚排出氨，益菌把氨轉成養分，植物吸收養分並把水變乾淨，清水再流回魚缸。</p>
+      <div class="chain" aria-hidden="true">
+        <span>魚排氨</span><i>→</i>
+        <span>益菌轉化</span><i>→</i>
+        <span>植物淨水</span><i>→</i>
+        <span>清水回流</span>
+      </div>
+      <button type="button" class="win-btn" id="winReset">再玩一次</button>
+    </section>
+
+    <div class="layout">
+      <section class="board" aria-label="循環圖">
+        <p class="board-note">順著箭頭，把部件放進每一步。</p>
+        <div class="cycle" id="cycle">
+          <div class="hub" aria-hidden="true"><div class="hub-ring">循環</div></div>
+
+          <article class="slot slot-fish" data-accept="fish">
+            <div class="slot-head">
+              <span class="badge">一</span>
+              <div class="slot-titles">
+                <h3>排出氨</h3>
+                <p>誰把氨排進水裡？</p>
+              </div>
+              <span class="mark">已放好</span>
+            </div>
+            <div class="drop">
+              <button type="button" class="drop-btn" aria-label="放到排出氨"><span class="drop-idle">拖到這裡</span><span class="drop-ready">放到這裡</span></button>
+            </div>
+          </article>
+          <div class="arrow arrow-12">
+            <span class="arrow-label">氨</span>
+            <svg class="chevron" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 20 H26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M20 12 L30 20 L20 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+
+          <article class="slot slot-bacteria" data-accept="bacteria">
+            <div class="slot-head">
+              <span class="badge">二</span>
+              <div class="slot-titles">
+                <h3>轉成養分</h3>
+                <p>誰把氨轉成植物能用的養分？</p>
+              </div>
+              <span class="mark">已放好</span>
+            </div>
+            <div class="drop">
+              <button type="button" class="drop-btn" aria-label="放到轉成養分"><span class="drop-idle">拖到這裡</span><span class="drop-ready">放到這裡</span></button>
+            </div>
+          </article>
+          <div class="arrow arrow-23">
+            <span class="arrow-label">養分</span>
+            <svg class="chevron" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 20 H26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M20 12 L30 20 L20 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+
+          <article class="slot slot-plant" data-accept="plant">
+            <div class="slot-head">
+              <span class="badge">三</span>
+              <div class="slot-titles">
+                <h3>吸收淨水</h3>
+                <p>誰吸收養分，並把水變乾淨？</p>
+              </div>
+              <span class="mark">已放好</span>
+            </div>
+            <div class="drop">
+              <button type="button" class="drop-btn" aria-label="放到吸收淨水"><span class="drop-idle">拖到這裡</span><span class="drop-ready">放到這裡</span></button>
+            </div>
+          </article>
+          <div class="arrow arrow-34">
+            <span class="arrow-label">淨水</span>
+            <svg class="chevron" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 20 H26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M20 12 L30 20 L20 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+
+          <article class="slot slot-water" data-accept="water">
+            <div class="slot-head">
+              <span class="badge">四</span>
+              <div class="slot-titles">
+                <h3>清水回流</h3>
+                <p>誰把清水送回魚缸？</p>
+              </div>
+              <span class="mark">已放好</span>
+            </div>
+            <div class="drop">
+              <button type="button" class="drop-btn" aria-label="放到清水回流"><span class="drop-idle">拖到這裡</span><span class="drop-ready">放到這裡</span></button>
+            </div>
+          </article>
+          <div class="arrow arrow-41">
+            <span class="arrow-label">回流魚缸</span>
+            <svg class="chevron" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 20 H26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M20 12 L30 20 L20 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side" id="side">
+        <div class="side-top">
+          <h2>部件</h2>
+          <button type="button" class="reset-btn" id="resetBtn">再玩一次</button>
+        </div>
+        <p class="side-help">魚、益菌、植物、水（養分媒介）。放錯會有一句科學小提示。</p>
+        <div class="tip" id="tip" role="status" aria-live="polite">
+          <p class="tip-kicker" id="tipKicker">小提示</p>
+          <p class="tip-text" id="tipText">看清楚每一步的問題，再把部件放上去。</p>
+        </div>
+        <div class="pieces" id="tray">
+          <button type="button" class="piece" draggable="false" data-piece="fish" aria-label="魚，排廢者">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <ellipse cx="36" cy="34" rx="14" ry="10" fill="#38bdf8"/>
+                <path d="M22 34 L10 24 L13 34 L10 44 Z" fill="#0284c7"/>
+                <path d="M30 25 C34 16 42 16 46 23" fill="#7dd3fc"/>
+                <circle cx="43" cy="32" r="2.2" fill="#0f172a"/>
+                <circle cx="43.8" cy="31.3" r=".8" fill="#fff"/>
+                <path d="M40 38 Q44 40 40 42" fill="none" stroke="#0369a1" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="piece-text">
+              <span class="piece-name">魚</span>
+              <span class="piece-sub">排廢者</span>
+            </span>
+          </button>
+          <button type="button" class="piece" draggable="false" data-piece="bacteria" aria-label="益菌，有益細菌">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <circle cx="26" cy="36" r="12" fill="#34d399"/>
+                <circle cx="42" cy="28" r="10" fill="#6ee7b7"/>
+                <circle cx="40" cy="46" r="8" fill="#10b981"/>
+                <circle cx="22" cy="34" r="1.6" fill="#064e3b"/>
+                <circle cx="29" cy="38" r="1.6" fill="#064e3b"/>
+                <circle cx="40" cy="26" r="1.4" fill="#065f46"/>
+                <circle cx="44" cy="31" r="1.3" fill="#065f46"/>
+                <circle cx="38" cy="46" r="1.3" fill="#064e3b"/>
+              </svg>
+            </span>
+            <span class="piece-text">
+              <span class="piece-name">益菌</span>
+              <span class="piece-sub">有益細菌</span>
+            </span>
+          </button>
+          <button type="button" class="piece" draggable="false" data-piece="plant" aria-label="植物，蔬菜">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <ellipse cx="32" cy="52" rx="12" ry="5" fill="#99f6e4"/>
+                <path d="M32 50 V30" fill="none" stroke="#059669" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M32 36 C24 34 18 26 20 18 C28 22 32 30 32 36 Z" fill="#34d399"/>
+                <path d="M32 32 C40 28 50 22 48 14 C40 18 32 26 32 32 Z" fill="#10b981"/>
+              </svg>
+            </span>
+            <span class="piece-text">
+              <span class="piece-name">植物</span>
+              <span class="piece-sub">蔬菜</span>
+            </span>
+          </button>
+          <button type="button" class="piece" draggable="false" data-piece="water" aria-label="水，養分媒介">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <path d="M32 12 C27 22 16 32 16 42 C16 51 23 58 32 58 C41 58 48 51 48 42 C48 32 37 22 32 12 Z" fill="#38bdf8"/>
+                <ellipse cx="26" cy="38" rx="3.2" ry="2" fill="#fff" opacity=".8"/>
+                <circle cx="28" cy="46" r="2.8" fill="#fde68a"/>
+                <circle cx="36" cy="49" r="2.2" fill="#bbf7d0"/>
+              </svg>
+            </span>
+            <span class="piece-text">
+              <span class="piece-name">水</span>
+              <span class="piece-sub">養分媒介</span>
+            </span>
+          </button>
+        </div>
+        <p class="tray-empty" id="trayEmpty" hidden>全部放上循環圖了。</p>
+      </aside>
+    </div>
+  </main>
+  <footer>校園共生池學習單元｜拼循環圖　·　小六常識科</footer>
+</div>
+<noscript><p style="padding:16px;">請開啟瀏覽器的 JavaScript，才能玩拼循環圖。</p></noscript>
+<script>
+(function () {
+  "use strict";
+
+  var TIPS = {
+    fish: {
+      bacteria: "益菌住在過濾區，負責把氨轉成養分，不是排出氨的魚。",
+      plant: "植物負責吸收養分和把水變乾淨。氨是魚排出來的。",
+      water: "水負責運送養分，再把清水送回魚缸。排出氨的是魚。"
+    },
+    bacteria: {
+      fish: "魚會把氨排進水裡，但不會把氨變成養分。這一步要靠益菌。",
+      plant: "植物吸收的是已經轉好的養分。把氨轉成養分的是益菌。",
+      water: "水只負責運送。把氨轉成養分的是益菌。"
+    },
+    plant: {
+      fish: "魚住在魚缸裡。吸收養分、把水變乾淨的是植物。",
+      bacteria: "益菌把氨轉成養分。吸收養分並把水變乾淨的是植物。",
+      water: "水把養分送到根部。真正吸收養分、把水變乾淨的是植物。"
+    },
+    water: {
+      fish: "魚在魚缸裡生活。把淨化後的清水送回魚缸的是水。",
+      bacteria: "益菌負責轉化氨。把清水送回魚缸的是水。",
+      plant: "植物把水變乾淨。把清水送回魚缸、讓循環繼續的是水。"
+    }
+  };
+
+  var tray = document.getElementById("tray");
+  var side = document.getElementById("side");
+  var tip = document.getElementById("tip");
+  var tipKicker = document.getElementById("tipKicker");
+  var tipText = document.getElementById("tipText");
+  var win = document.getElementById("win");
+  var trayEmpty = document.getElementById("trayEmpty");
+  var selected = null;
+  var drag = null;
+  var fromPointer = false;
+  var narrowQuery = window.matchMedia("(max-width: 879px)");
+
+  function showTip(kind, text) {
+    tip.classList.remove("is-bad", "is-ok");
+    if (kind === "bad") tip.classList.add("is-bad");
+    if (kind === "ok") tip.classList.add("is-ok");
+    tipKicker.textContent = kind === "bad" ? "再想想" : kind === "ok" ? "接上了" : "小提示";
+    tipText.textContent = text;
+  }
+
+  function shuffleTray() {
+    var pieces = Array.prototype.slice.call(tray.querySelectorAll(".piece"));
+    for (var i = pieces.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pieces[i];
+      pieces[i] = pieces[j];
+      pieces[j] = tmp;
+    }
+    pieces.forEach(function (piece) { tray.appendChild(piece); });
+  }
+
+  function clearSelection() {
+    if (selected) selected.classList.remove("is-selected");
+    selected = null;
+    document.body.classList.remove("has-selection");
+  }
+
+  function toggleSelect(piece) {
+    if (piece.classList.contains("is-locked")) return;
+    if (selected === piece) {
+      clearSelection();
+      return;
+    }
+    clearSelection();
+    selected = piece;
+    piece.classList.add("is-selected");
+    document.body.classList.add("has-selection");
+    showTip("idle", "已點選部件。再點一個空位，或直接拖過去。");
+  }
+
+  function flash(slot) {
+    slot.classList.remove("shake");
+    void slot.offsetWidth;
+    slot.classList.add("shake");
+  }
+
+  function clearHot() {
+    Array.prototype.forEach.call(document.querySelectorAll(".slot.is-hot"), function (slot) {
+      slot.classList.remove("is-hot");
+    });
+  }
+
+  function slotAt(x, y) {
+    var stack = document.elementsFromPoint(x, y);
+    var top = stack[0];
+    if (top && top.closest && (top.closest(".side") || top.closest(".nav") || top.closest(".win"))) return null;
+    for (var i = 0; i < stack.length; i++) {
+      var slot = stack[i].closest ? stack[i].closest(".slot") : null;
+      if (slot) return slot;
+    }
+    var best = null;
+    var bestDist = 36;
+    Array.prototype.forEach.call(document.querySelectorAll(".slot"), function (slot) {
+      var rect = slot.getBoundingClientRect();
+      var cx = Math.max(rect.left, Math.min(x, rect.right));
+      var cy = Math.max(rect.top, Math.min(y, rect.bottom));
+      var dist = Math.hypot(x - cx, y - cy);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = slot;
+      }
+    });
+    return best;
+  }
+
+  function allFilled() {
+    return document.querySelectorAll(".slot.is-filled").length === 4;
+  }
+
+  function updateEmpty() {
+    trayEmpty.hidden = tray.querySelector(".piece") !== null;
+  }
+
+  function showWin() {
+    win.hidden = false;
+    showTip("ok", "過關。魚排出氨，益菌把氨轉成養分，植物吸收養分並把水變乾淨，清水再流回魚缸。");
+    updateEmpty();
+    win.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }
+
+  function tryDrop(piece, slot) {
+    if (!piece || !slot || piece.classList.contains("is-locked")) return;
+    if (slot.classList.contains("is-filled")) {
+      showTip("bad", "這個位置已經放好了，試試另一個空位。");
+      flash(slot);
+      return;
+    }
+    var want = slot.getAttribute("data-accept");
+    var got = piece.getAttribute("data-piece");
+    if (want !== got) {
+      showTip("bad", TIPS[want][got]);
+      flash(slot);
+      return;
+    }
+    slot.classList.add("is-filled");
+    slot.querySelector(".drop").appendChild(piece);
+    piece.classList.add("is-locked");
+    piece.classList.remove("is-selected");
+    piece.setAttribute("aria-disabled", "true");
+    var btn = slot.querySelector(".drop-btn");
+    btn.hidden = true;
+    btn.tabIndex = -1;
+    if (selected === piece) selected = null;
+    document.body.classList.remove("has-selection");
+    updateEmpty();
+    if (allFilled()) showWin();
+    else showTip("ok", "放對了，這一步接上了。");
+  }
+
+  function endDrag() {
+    if (!drag) return;
+    if (drag.ghost && drag.ghost.parentNode) drag.ghost.parentNode.removeChild(drag.ghost);
+    drag.piece.classList.remove("is-dragging");
+    document.body.classList.remove("is-dragging");
+    clearHot();
+    drag = null;
+  }
+
+  function onPointerDown(event) {
+    if (drag) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    var piece = event.currentTarget;
+    if (piece.classList.contains("is-locked")) return;
+    if (piece.setPointerCapture) piece.setPointerCapture(event.pointerId);
+    var rect = piece.getBoundingClientRect();
+    drag = {
+      piece: piece,
+      id: event.pointerId,
+      ox: event.clientX - rect.left,
+      oy: event.clientY - rect.top,
+      sx: event.clientX,
+      sy: event.clientY,
+      w: rect.width,
+      moved: false,
+      ghost: null,
+      hot: null,
+      pointerType: event.pointerType
+    };
+    event.preventDefault();
+  }
+
+  function onPointerMove(event) {
+    if (!drag || event.pointerId !== drag.id) return;
+    var dx = event.clientX - drag.sx;
+    var dy = event.clientY - drag.sy;
+    if (!drag.moved && (dx * dx + dy * dy) >= 64) {
+      drag.moved = true;
+      clearSelection();
+      var ghost = drag.piece.cloneNode(true);
+      ghost.className = "piece ghost";
+      ghost.setAttribute("aria-hidden", "true");
+      ghost.removeAttribute("id");
+      ghost.style.width = drag.w + "px";
+      document.body.appendChild(ghost);
+      drag.ghost = ghost;
+      drag.piece.classList.add("is-dragging");
+      document.body.classList.add("is-dragging");
+    }
+    if (!drag.moved) return;
+    var lift = drag.pointerType === "touch" ? 40 : 0;
+    drag.ghost.style.left = (event.clientX - drag.ox) + "px";
+    drag.ghost.style.top = (event.clientY - drag.oy - lift) + "px";
+    clearHot();
+    drag.hot = slotAt(event.clientX, event.clientY);
+    if (drag.hot) drag.hot.classList.add("is-hot");
+    event.preventDefault();
+  }
+
+  function onPointerUp(event) {
+    if (!drag || event.pointerId !== drag.id) return;
+    var piece = drag.piece;
+    var moved = drag.moved;
+    var hot = drag.hot;
+    endDrag();
+    fromPointer = true;
+    setTimeout(function () { fromPointer = false; }, 0);
+    if (moved) {
+      if (hot) tryDrop(piece, hot);
+    } else {
+      toggleSelect(piece);
+    }
+  }
+
+  function onPointerCancel() {
+    endDrag();
+  }
+
+  function blockTouchMove(event) {
+    if (drag && drag.moved && event.cancelable) event.preventDefault();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".piece"), function (piece) {
+    piece.addEventListener("pointerdown", onPointerDown, { passive: false });
+    piece.addEventListener("pointermove", onPointerMove, { passive: false });
+    piece.addEventListener("pointerup", onPointerUp);
+    piece.addEventListener("pointercancel", onPointerCancel);
+    piece.addEventListener("dragstart", function (event) { event.preventDefault(); });
+    piece.addEventListener("click", function (event) {
+      if (fromPointer || event.detail !== 0) return;
+      toggleSelect(piece);
+    });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".slot"), function (slot) {
+    var btn = slot.querySelector(".drop-btn");
+    btn.addEventListener("click", function () {
+      if (!selected) {
+        showTip("idle", "先點選一個部件，或直接把它拖到空位上。");
+        return;
+      }
+      tryDrop(selected, slot);
+    });
+  });
+
+  document.addEventListener("touchmove", blockTouchMove, { passive: false });
+
+  function resetGame() {
+    endDrag();
+    clearSelection();
+    win.hidden = true;
+    Array.prototype.forEach.call(document.querySelectorAll(".piece"), function (piece) {
+      piece.classList.remove("is-locked", "is-selected", "is-dragging");
+      piece.removeAttribute("aria-disabled");
+      tray.appendChild(piece);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".slot"), function (slot) {
+      slot.classList.remove("is-filled", "is-hot", "shake");
+      var btn = slot.querySelector(".drop-btn");
+      btn.hidden = false;
+      btn.tabIndex = 0;
+    });
+    shuffleTray();
+    updateEmpty();
+    showTip("idle", "部件已重新排好，再拼一次吧。");
+    document.getElementById("title").focus({ preventScroll: true });
+  }
+
+  document.getElementById("resetBtn").addEventListener("click", resetGame);
+  document.getElementById("winReset").addEventListener("click", resetGame);
+
+  function fitTray() {
+    if (narrowQuery.matches) {
+      var height = side.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--tray-space", (height + 16) + "px");
+      document.body.style.paddingBottom = (height + 16) + "px";
+    } else {
+      document.documentElement.style.setProperty("--tray-space", "0px");
+      document.body.style.paddingBottom = "";
+    }
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(fitTray).observe(side);
+  window.addEventListener("resize", fitTray);
+  narrowQuery.addEventListener("change", fitTray);
+
+  shuffleTray();
+  updateEmpty();
+  fitTray();
+})();
+</script>
+</body>
+</html>
